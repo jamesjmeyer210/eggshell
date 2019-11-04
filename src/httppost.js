@@ -50,6 +50,9 @@ class HttpPost extends HttpRequest {
 			res.on('end', this.onOk);
 		});
 
+		req.setTimeout(60000, () => {
+			this.abort();
+		}).bind(req);
 		req.write(this.body);	
 		req.end();
 	}

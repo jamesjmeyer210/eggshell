@@ -62,7 +62,9 @@ class HttpRequest {
 			res.on('end', this.onOk);
 		});
 
-		//req.write();
+		req.setTimeout(60000, () => {
+			this.abort();
+		}).bind(req);
 		req.end();
 	}
 
