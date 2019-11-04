@@ -1,6 +1,10 @@
 'use strict';
-
+// imports
 const https = require('https');
+const {URL} = require("url");
+// shorthand
+const rule = console.assert;
+const T = (thing) => { return typeof(thing) };
 
 class HttpRequest {
 
@@ -21,6 +25,17 @@ class HttpRequest {
 			headers: {},
 			body: '',
 		};
+	}
+
+	// -> HttpRequest
+	static easy(method, url, headers){
+		rule(T(method) == 'string', T(url) == 'string', T(headers) == 'object');
+		let u = new URL(url);
+
+		return new HttpRequest(method, u.origin,
+			(u.port == '' || u.port == undefined) ? 443 : u.port,
+			(u.path == '' || u.path == undefined) ? '/' : u.path,
+			headers);
 	}
 
 	ok(action){

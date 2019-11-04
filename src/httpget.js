@@ -11,15 +11,19 @@ class HttpGet extends HttpRequest {
 
 	// -> HttpGet
 	constructor(origin, port, path, headers){
+		rule(T(origin) == 'string', T(port) == 'string', T(path) == 'string', T(headers) == 'object');
 		super('GET', origin, port, path, headers);
 	}
 
 	// -> HttpGet
 	static easy(url, headers) {
-		rule(T(url) == 'string' && T(headers) == 'object');
-		
-		url = new URL(url);
-		return new this(url.origin, url.port, url.href, headers);
+		rule(T(url) == 'string', T(headers) == 'object');
+		let u = new URL(url);
+
+		return new HttpGet(u.origin,
+			(u.port == '' || u.port == undefined) ? 443 : u.port,
+			(u.path == '' || u.paht == undefined) ? '/' : u.path,
+			headers);
 	}
 
 }
