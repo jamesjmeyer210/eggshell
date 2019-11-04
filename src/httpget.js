@@ -19,7 +19,7 @@ class HttpGet extends HttpRequest {
 		rule(T(url) == 'string' && T(headers) == 'object');
 		
 		url = new URL(url);
-		return new this(url.origin, url.port, url.href, headers, body);
+		return new this(url.origin, url.port, url.href, headers);
 	}
 
 }
