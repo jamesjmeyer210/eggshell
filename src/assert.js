@@ -1,31 +1,25 @@
-function Assert() {
-	this.message = '\n';
-	this.isLoggable = false;
-	this.assetions = []; // TODO: how many assetions
+class Assert {
 
-	this.that = (message) => {
-		this.message = this.message.concat(message);
-		return this;
+	static that(message) {
+		console.log(message);
+		return Assert;
 	};
 
-	this.equal = (standard, comparable) => {
+	static equal(standard, comparable) {
 		if(standard.toString() == comparable.toString()){
+			console.log(`PASS: Expected: ${standard} Got: ${comparable}`);
 			return true;
 		}
 		else {
-			this.message = this.message.concat(`\nExpected: ${standard}\nGot: ${comparable}`);
-			
-			if(this.isLoggable){
-				console.error(this.message);
-			}
-
+			console.log(`FAIL: Expected: ${standard} Got: ${comparable}`);
 			return false;
 		}
 	};
 
-	this.notEqual = (standard, comparable) => {
+	static notEqual(standard, comparable) {
 		return !this.equal(standard, comparable);
 	};
+
 }
 
 module.exports = Assert;

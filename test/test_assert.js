@@ -1,16 +1,9 @@
 const Assert = require('../src/assert.js');
-let c = console;
-
-let assert = new Assert();
+let assert = console.assert;
 
 // importing works
-c.assert(assert != null);
+assert(Assert != undefined);
 
-// check for properties
-c.assert(assert.message != undefined);
-c.assert(assert.isLoggable != undefined);
+assert( false == Assert.equal(1, 2) );
 
-// implement loggable
-assert.isLoggable = true;
-
-c.assert( false == assert.that("1 equals 2").equal(1, 2) );
+assert( true == Assert.that('1 + 1 equals 2').equal(1 + 1, 2));
